@@ -9,5 +9,11 @@ According to [official website](https://nextjs.org/), Nextjs is "The React Frame
 3. Full-stack capabiliies
 
 
+## Section 2: Pages & file-based routing
+File-based routing works by using the file system as a representation for routes instead of configuring a router in a single file using a library (like react-router-dom). When a file is added to the <code>pages</code> directory, it's automatically available as a route.
+
+![file-based routing](notesResources/section-2/Section2_1.png)
+
 ## References
 - https://nextjs.org/
+- https://nextjs.org/docs/pages/building-your-application/routing
