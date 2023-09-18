@@ -9,7 +9,7 @@ According to [official website](https://nextjs.org/), Nextjs is "The React Frame
 3. Full-stack capabiliies
 
 
-## Section 2: Pages & file-based routing
+## Section 3: Pages & file-based routing
 File-based routing works by using the file system as a representation for routes instead of configuring a router in a single file using a library (like react-router-dom). When a file is added to the <code>pages</code> directory, it's automatically available as a route.  
 If a file: <code>pages/about.js</code> is created that exports a React component, it will be accessible at <code>/about</code>
 ```JS
@@ -153,7 +153,41 @@ function ClientsPage() {
 export default ClientsPage;
 ```
 
+### Shallow routing
+Shallow routing is a technique to update the URL of a page without reloading the page itself or fetching new data from the server.  
+
+```JS
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+ 
+// Current URL is '/'
+function Page() {
+  const router = useRouter()
+ 
+  useEffect(() => {
+    // Always do navigations after the first render
+    router.push('/?counter=10', undefined, { shallow: true })
+  }, [])
+ 
+  useEffect(() => {
+    // The counter changed!
+  }, [router.query.counter])
+}
+ 
+export default Page
+```
+**Note**: Shallow routing only works for URL changes in the current page.  
+For example, let's assume we have another page called <code>pages/about.js</code>, and we run the below code:
+```JS
+router.push('/?counter=10', '/about?counter=10', { shallow: true });
+```
+Since that's a new page, it'll unload the current page, load the new one and wait for data fetching even though we asked to do shallow routing.
+
+### Custom 404 page
+To add a custom 404 page, create a <code>404.js</code> file inside <code>pages</code> directory.
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
 - https://nextjs.org/docs/pages/building-your-application/routing/linking-and-navigating
+- https://www.netlify.com/blog/2021/06/02/shallow-routing-in-next.js/
