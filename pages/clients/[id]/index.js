@@ -4,20 +4,22 @@ function ClientsProjectPage() {
   const router = useRouter();
   console.log(router.query);
 
+  console.log("asPath:", router.asPath);
+
   function loadProjectHandler() {
     // load data here...
 
     // Method 1
-    router.push('/clients/client1/project1');
+    router.push('/clients/client1/?project=1', '/clients/client1/?project=2', {shallow: true});
 
     // Method 2
-    router.push({
-      pathname: 'clients/[id]/[clientProjectId]',
-      query: { id: 'client1', clientProjectId: 'project1'}
-    });
+    // router.push({
+    //   pathname: 'clients/[id]/[clientProjectId]',
+    //   query: { id: 'client1', clientProjectId: 'project1'}
+    // });
 
     // Replace current page (cannot go back in browser)
-    router.replace('/clients/client1/project1') // can use any of the two ways mentioned above to navigate 
+    // router.replace('/clients/client1/project1') // can use any of the two ways mentioned above to navigate 
   }
 
   return (
