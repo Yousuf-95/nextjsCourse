@@ -18,12 +18,15 @@ export default function About() {
 }
 ```
 
-![file-based routing](notesResources/section-2/Section2_1.png)
+![file-based routing](notesResources/section-3/Section3_1.png)
+
+File-based vs code-based routing
+![file-based vs code-based routing](notesResources/section-3/Section3_2.png)
 
 ### Dynamic routes
 A dynamic segment can be created by wrapping a folder's name in square brackets.
 Example: [id].js or [slug].js
-Dynamic segments can be accessed from <code>useRouter</code>
+Dynamic segments can be accessed from <code>useRouter</code> hook.
 
 ```JS
 // pages/clients/[id]/index.js
@@ -185,6 +188,48 @@ Since that's a new page, it'll unload the current page, load the new one and wai
 
 ### Custom 404 page
 To add a custom 404 page, create a <code>404.js</code> file inside <code>pages</code> directory.
+
+## Section 4: Project time: Working with file-based routing
+This section is a small project built to practice File-based routing.
+
+Project routes:
+![project routes](notesResources/section-4/Section4_1.png)
+
+### Add layout to all pages:
+To create a layout for all pages, we wrap the component in <code>_app.js</code> with our custom layout. In the example below, we add <code>MainHeader</code>, a component to display navbar in all pages
+```JS
+// components/layout/layout.js
+import MainHeader from "./mainHeader";
+import { Fragment } from "react";
+
+function Layout(props) {
+  return (
+    <Fragment>
+      <MainHeader />
+      <main>{props.children}</main>
+    </Fragment>
+  );
+}
+
+export default Layout;
+```  
+
+```JS
+// pages/_app.js
+import Layout from "@/components/layout/layout";
+import "@/styles/globals.css";
+
+export default function App({ Component, pageProps }) {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+}
+```
+
+### Styling components in Next.js:
+Next.js has built-in support for css modules. All css module files should end with <code>.module.css</code>
 
 ## References
 - https://nextjs.org/
