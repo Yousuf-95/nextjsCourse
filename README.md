@@ -231,8 +231,24 @@ export default function App({ Component, pageProps }) {
 ### Styling components in Next.js:
 Next.js has built-in support for css modules. All css module files should end with <code>.module.css</code>
 
+## Section 5: Page Pre-rendering & Data Fetching
+Next.js pre-renders every page by default, i.e, it generates HTML for each page in advance, instead of loading it on client side by JavaScript. Pre-rendering helps in better performance and SEO.
+
+Next.js supports two types of pre-rendering:
+1. Static generation:  
+   Static Generation is the pre-rendering method that generates the HTML at build time. The pre-rendered HTML is then reused on each request.
+2. Server-side rendering:  
+   Server-side Rendering is the pre-rendering method that generates HTML on each request.
+
+Next.js allows to select type of pre-rendering for each page as required.
+
+![page pre-rendering](notesResources/section-5/Section5_1.png)
+
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
 - https://nextjs.org/docs/pages/building-your-application/routing/linking-and-navigating
 - https://www.netlify.com/blog/2021/06/02/shallow-routing-in-next.js/
+- https://nextjs.org/learn/basics/data-fetching/pre-rendering
+- https://nextjs.org/learn/basics/data-fetching/two-forms
