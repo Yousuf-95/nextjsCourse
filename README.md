@@ -245,6 +245,90 @@ Next.js allows to select type of pre-rendering for each page as required.
 ![page pre-rendering](notesResources/section-5/Section5_1.png)
 
 
+### Static Generation
+Static generation with data:
+To fetch data in static generation, we can use an async function<code>getStaticProps</code>. This function runs at build-time (only once) and inside this function, we can fetch the data and send it as props to the page.
+
+**Important notes on <code>getStaticProps</code> function:**
+1. Runs only once at build-time in production and on each request in development mode.
+2. Runs on the server-side.
+3. Code for this function won't be included in the JS bundle for the browser.
+4. Cannot use data only available during request-time like query parameters of HTTP headers.
+5. It can only be exported from a page component (components inside <code>page</code> directory).
+
+![static generation](notesResources/section-5/Section5_2.png)
+
+
+```JS
+import fs from "fs/promises";
+import path from "path";
+
+function HomePage(props) {
+  const { products } = props;
+
+  return (
+    <ul>
+      {products.map((product) => (
+        <li key={product.id}>{product.title}</li>
+      ))}
+    </ul>
+  );
+}
+
+// The code in this function won't be visible in the frontend.
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "data", "dummyBackend.json");
+  console.log(filePath);
+  const result = await fs.readFile(filePath);
+  const data = JSON.parse(result);
+
+  return {
+    props: {
+      products: data.products,
+    },
+  };
+}
+
+export default HomePage;
+```
+
+### Incremental Static Regeneration (ISR)
+In Static Generation, the data fetched for the page was fetched during build time only once and to update the data on the page, re-building and deploying again is inefficient. To update the data on the static page without losing the benefits of Static Generation, we can use Incremental Static Regeneration. It allows to update the static pages after the app/site is built. ISR can be enabled by adding <code>revalidate</code> property to <code>getStaticProps</code> return object.
+
+![incremental static generation](notesResources/section-5/Section5_3.png)
+
+```JS
+export async function getStaticProps() {
+  ...
+  return {
+    props: {
+      products: data.products,
+    },
+    // Update the page after every 60 seconds
+    revalidate: 60
+  };
+}
+```
+
+### Static Generation with dynamic routes
+Next.js by default pre-renders all pages except dynamic pages. To pre-render dynamic pages, we specify the dynamic paths to pre-render using <code>getStaticPaths</code> function. Next.js will pre-render paths defined in <code>paths</code> key of the returned object.
+
+```JS
+export async function getStaticPaths() {
+  const data = await getData();
+
+  const productPaths = data.products.map((product) => ({
+    params: { pid: product.id },
+  }));
+
+  return {
+    paths: productPaths,
+    fallback: false // false or 'blocking',
+  };
+}
+```
+
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -252,3 +336,6 @@ Next.js allows to select type of pre-rendering for each page as required.
 - https://www.netlify.com/blog/2021/06/02/shallow-routing-in-next.js/
 - https://nextjs.org/learn/basics/data-fetching/pre-rendering
 - https://nextjs.org/learn/basics/data-fetching/two-forms
+- https://nextjs.org/docs/pages/api-reference/functions/get-static-props
+- https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration
+- https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
