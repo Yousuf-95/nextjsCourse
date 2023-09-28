@@ -8,6 +8,7 @@ export async function getStaticProps(context) {
 
   const product = data.products.find((product) => product.id === productId);
 
+  // Return 404 if data for pid is not found
   if (!product) {
     return { notFound: true };
   }
@@ -42,6 +43,11 @@ async function getData() {
 
 function ProductDetails(props) {
   const { loadedProduct } = props;
+
+  // Use when 'fallback' is true in getStaticPaths
+  if (!loadedProduct) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
