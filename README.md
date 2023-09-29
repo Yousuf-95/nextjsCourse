@@ -328,6 +328,27 @@ export async function getStaticPaths() {
 }
 ```
 
+### Server-Side Rendering (SSR)
+In Server-side rendering, data for the page is fetched on every request to the page and is useful for data that changes frequently. To use Server-side rendering, we should export <code>getServerSideProps</code> function from the page. This function is called on each request and contains request specific parameters (headers, cookies etc).
+
+![server-side rendering](notesResources/section-5/Section5_5.png) 
+
+```JS
+function UserProfilePage(props) {
+  return <h1>{props.username}</h1>;
+}
+
+export default UserProfilePage;
+
+export async function getServerSideProps(context) {
+    
+  return {
+    props: {
+      username: "John Doe",
+    },
+  };
+}
+```
 
 ## References
 - https://nextjs.org/
@@ -339,3 +360,4 @@ export async function getStaticPaths() {
 - https://nextjs.org/docs/pages/api-reference/functions/get-static-props
 - https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration
 - https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
+- https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props
