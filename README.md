@@ -350,6 +350,57 @@ export async function getServerSideProps(context) {
 }
 ```
 
+### Client-Side Rendering (CSR)
+In Client-side rendering, data for the page is fetched from the browser and the page will be interactice after the browser has downloaded the application bundle and data for the page. This is how a traditional React app is rendered and is good for dashboards, private sites and cases where SEO is not required.
+```JS
+import { useEffect, useState } from "react";
+
+function LastSalesPage() {
+  const [sales, setSales] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch('path to api')
+      .then((response) => response.json())
+      .then((data) => {
+        setSales(data);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (!data || !sales) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <ul>
+      {sales.map((sale) => (
+        <li key={sale.id}>
+          {sale.username} - ${sale.volume}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default LastSalesPage;
+```
+
+### SWR
+SWR is a library created by Vercel for data-fetching, revalidating and caching in React applications using hooks. It has many different features such as revalidation on focus, pagination and scroll position recovery etc. 
+```JS
+import useSWR from 'swr'
+ 
+function Profile() {
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
+ 
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
+}
+```
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -361,3 +412,4 @@ export async function getServerSideProps(context) {
 - https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration
 - https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
 - https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props
+- https://swr.vercel.app/
