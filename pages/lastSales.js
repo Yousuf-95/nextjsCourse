@@ -50,6 +50,7 @@ function LastSalesPage(props) {
     return <p>Failed to load.</p>;
   }
 
+  // This will be returned in pre-rendering then data will be fetched and loaded on client-side
   if (!data && !sales) {
     return <p>Loading...</p>;
   }
