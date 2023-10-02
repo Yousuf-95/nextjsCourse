@@ -4,7 +4,6 @@ import EventsModel from "../models/eventsModel.js";
 
 function HomePage(props) {
   const { featuredEvents } = props;
-  // let events = JSON.parse(featuredEvents);
 
   return (
     <>
@@ -21,7 +20,6 @@ export default HomePage;
 
 export async function getStaticProps() {
   try {
-    // await mongoose.connect("mongodb://127.0.0.1:27017/nextjsCourse");
     await connectDb();
 
     const result = await EventsModel.find(
@@ -35,12 +33,11 @@ export async function getStaticProps() {
       return JSON.parse(JSON.stringify(event));
     });
 
-    console.log(events);
-
     return {
       props: {
         featuredEvents: events,
       },
+      revalidate: 10800
     };
   } catch (error) {
     console.log(error);
