@@ -31,7 +31,6 @@ export async function getStaticProps() {
     await connectDb();
 
     const result = await EventsModel.find({}, { _id: 0 }).lean();
-    console.log(result);
 
     return {
       props: {
