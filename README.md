@@ -401,6 +401,38 @@ function Profile() {
 }
 ```
 
+## Section 6: Page pre-rendering and data fetching project
+This section is a small project built to practice pre-rendering and data fetching features in Nextjs
+
+### Connection to MongoDB with mongoose
+Next.js has an official sample app that describes how to connect to Mongodb with Mongoose. Below is a modified code similar to the official method by Next.js
+```JS
+import mongoose from "mongoose";
+
+const MONGODB_URI = "mongodb://127.0.0.1:27017/nextjsCourse";
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null };
+}
+
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+  console.log("connecting to mongodb");
+  cached.conn = await mongoose.connect(MONGODB_URI);
+
+  return cached.conn;
+}
+
+export default dbConnect;
+```
+
+### Caveats:
+1. Error thrown by page <code>pages/events/[eventId].js</code> is caught by <code>[...slug].js</code> page in the same folder. To fix this, we return <code>{ notFound: true }</code> in <code>getStaticProps</code> function inside the page and set <code>fallback</code> option to <code>blocking</code> in <code>getStaticPaths</code> function. This solution may change in future.
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -413,3 +445,4 @@ function Profile() {
 - https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
 - https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props
 - https://swr.vercel.app/
+- https://mongoosejs.com/docs/nextjs.html
