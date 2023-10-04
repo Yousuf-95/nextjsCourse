@@ -4,6 +4,7 @@ import EventContent from "../../components/eventDetail/eventContent";
 import ErrorAlert from "@/components/ui/errorAlert";
 import EventsModel from "@/models/eventsModel";
 import connectDb from "@/lib/mongodbConnect";
+import Head from "next/head";
 
 function SpecificEventPage(props) {
   const { event } = props;
@@ -18,6 +19,14 @@ function SpecificEventPage(props) {
 
   return (
     <>
+      <Head>
+        <title>{event.title}</title>
+        <meta
+          name="description"
+          content={event.description}
+          key="description"
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
@@ -43,7 +52,7 @@ export async function getStaticProps(context) {
     { _id: 0 }
   ).lean();
 
-  if(!eventDetails) {
+  if (!eventDetails) {
     return {
       notFound: true,
     };
@@ -59,11 +68,11 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
   await connectDb();
 
-  const events = await EventsModel.find({isFeatured: true}, { _id: 0 });
+  const events = await EventsModel.find({ isFeatured: true }, { _id: 0 });
   const paths = events.map((event) => ({ params: { eventId: event.id } }));
 
   return {
     paths: paths,
-    fallback: 'blocking'
+    fallback: "blocking",
   };
 }

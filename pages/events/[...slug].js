@@ -4,13 +4,26 @@ import Button from "@/components/ui/button";
 import ErrorAlert from "@/components/ui/errorAlert";
 import connectDb from "@/lib/mongodbConnect";
 import EventsModel from "@/models/eventsModel";
+import Head from "next/head";
 
 function CatchAllRoutes(props) {
   const { filteredEvents } = props;
 
+  let pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth}/${numYear}.`}
+        key="description"
+      />
+    </Head>
+  );
+
   if (props?.hasError) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p>Invalid filter</p>
         </ErrorAlert>
@@ -24,6 +37,7 @@ function CatchAllRoutes(props) {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p>No events found</p>
         </ErrorAlert>
@@ -38,6 +52,7 @@ function CatchAllRoutes(props) {
 
   return (
     <>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>

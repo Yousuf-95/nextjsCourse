@@ -3,6 +3,7 @@ import EventsSearch from "../../components/events/eventsSearch";
 import { useRouter } from "next/router";
 import connectDb from "@/lib/mongodbConnect";
 import EventsModel from "@/models/eventsModel";
+import Head from "next/head";
 
 function EventsPage(props) {
   const router = useRouter();
@@ -16,6 +17,10 @@ function EventsPage(props) {
 
   return (
     <>
+      <Head>
+        <title>All Events</title>
+        <meta name="description" content="View open events" key="description" />
+      </Head>
       <div>
         <EventsSearch onSearch={findEventsHandler} />
         <EventList items={events} />

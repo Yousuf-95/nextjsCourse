@@ -1,6 +1,7 @@
 import EventList from "@/components/events/eventList";
 import connectDb from "../lib/mongodbConnect.js";
 import EventsModel from "../models/eventsModel.js";
+import Head from "next/head.js";
 
 function HomePage(props) {
   const { featuredEvents } = props;
@@ -8,9 +9,15 @@ function HomePage(props) {
   return (
     <>
       <div>
-        <ul>
-          <EventList items={featuredEvents} />
-        </ul>
+        <Head>
+          <title>Events Home Page</title>
+          <meta
+            name="description"
+            content="View open events"
+            key="description"
+          />
+        </Head>
+        <EventList items={featuredEvents} />
       </div>
     </>
   );
@@ -27,7 +34,7 @@ export async function getStaticProps() {
       // { _id: 0 }
     ).lean();
 
-    // Eirther Convert _id to string or remove '_id' field from query.
+    // Either Convert _id to string or remove '_id' field from query.
     // Nextjs will throw an error otherwise.
     const events = result.map((event) => {
       return JSON.parse(JSON.stringify(event));
@@ -37,7 +44,7 @@ export async function getStaticProps() {
       props: {
         featuredEvents: events,
       },
-      revalidate: 10800
+      revalidate: 10800,
     };
   } catch (error) {
     console.log(error);
