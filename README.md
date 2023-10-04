@@ -433,6 +433,75 @@ export default dbConnect;
 ### Caveats:
 1. Error thrown by page <code>pages/events/[eventId].js</code> is caught by <code>[...slug].js</code> page in the same folder. To fix this, we return <code>{ notFound: true }</code> in <code>getStaticProps</code> function inside the page and set <code>fallback</code> option to <code>blocking</code> in <code>getStaticPaths</code> function. This solution may change in future.
 
+## Section 7: Optimizing Nextjs apps
+
+### Head component
+<code>Head</code> component is a built-in component in Next.js for appending elements like <code>meta</code>, <code>title</code> to the <code>head</code> element of the page.
+```JS
+import Head from "next/head.js";
+
+function HomePage(props) {
+  ...
+  return (
+    <>
+      <div>
+          <Head>
+            <title>Events Home Page</title>
+            <meta name="description" content="View open events" />
+          </Head>
+          <EventList items={featuredEvents} />
+      </div>
+    </>
+  );
+}
+```
+
+* #### Handling conflicts/duplicates in <code>Head</code> component
+  To avoid duplicate tags in <code>Head</code> component, <code>key</code> property can be used to make sure only one tag is rendered. In the example below, only the second <code>meta</code> tag will be rendered.
+
+  ```JS
+  function HomePage(props) {
+
+  return (
+      <>
+        <div>
+          <Head>
+            <title>Events Home Page</title>
+            <meta name="description" content="View all events" key="description" />
+          </Head>
+          <Head>
+            <title>Events Home Page</title>
+            <meta name="description" content="View open events" key="description" />
+          </Head>
+        </div>
+      </>
+    );
+  }
+  ```
+
+## Custom document
+A custom document can update the <code>\<html\></code> and <code>\<body\></code> tags used to render a page. This can be used to add custom <code>head</code>, <code>body</code> tags or set an attribute to an element globally. This custom document is defined in a special <code>_document.js</code> file inside <code>pages</code> directory. In the example below, we add a <code>lang</code> attribute to html tag globally.
+
+```JS
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html lang='en'>
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default MyDocument;
+```
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -446,3 +515,5 @@ export default dbConnect;
 - https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props
 - https://swr.vercel.app/
 - https://mongoosejs.com/docs/nextjs.html
+- https://nextjs.org/docs/pages/api-reference/components/head
+- https://nextjs.org/docs/pages/building-your-application/routing/custom-document
