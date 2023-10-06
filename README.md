@@ -502,6 +502,27 @@ class MyDocument extends Document {
 export default MyDocument;
 ```
 
+### Image component
+The Next.js <code>\<Image\></code> component extends the <code>\<img\></code> element with features for automatic image optimization.  
+- Size optimization: Serve correct sized images for different screen sizes.
+- Lazy loading: load images only when user enter the viewport.
+- Modern image formats: Use WebP and AVIF image formats.
+- Visual Stability: Prevent layout shift automatically when images are loading.
+
+```JS
+import Image from "next/image";
+
+function Page() {
+  ...
+  return (
+      <Image src={`/${image}`} alt={imageAlt} width={400} height={400} />
+      ...
+  );
+}
+
+export default Page;
+```
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -517,3 +538,4 @@ export default MyDocument;
 - https://mongoosejs.com/docs/nextjs.html
 - https://nextjs.org/docs/pages/api-reference/components/head
 - https://nextjs.org/docs/pages/building-your-application/routing/custom-document
+- https://nextjs.org/docs/pages/api-reference/components/image
