@@ -523,6 +523,35 @@ function Page() {
 export default Page;
 ```
 
+## Section 8: Backend code with API routes
+Any file inside the folder <code>/pages/api</code> is mapped to <code>/api/*</code> and is treated as an API route instead of a page. All endpoints are server-side only and will not be sent to the client. Dynamic API routes and catch-all API routes can be created in the same way as in page routes.  
+
+Example:
+```
+/api/feedback/index.js        --->    /api/feedback
+/api/feedback/[feedback].js   --->    /api/feedback/*
+```
+
+### Custom config object:
+Every API Route can export a <code>config</code> object to change the default configuration. Check documentation for all config object features.  
+Example:
+```JS
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '1mb',
+    },
+  },
+  // Specifies the maximum allowed duration for this function to execute (in seconds)
+  maxDuration: 5,
+}
+```
+
+
+
+### Note:
+1. It is better not to call your own API route inside <code>getStaticProps</code> or <code>getServerSideProps</code> to get data. Instead, export the logic present inside your API route so that it can be used inside <code>getStaticProps</code> or <code>getServerSideProps</code> functions directly. (See lecture 149: Using API Routes for Pre-rendering Pages).
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
@@ -539,3 +568,4 @@ export default Page;
 - https://nextjs.org/docs/pages/api-reference/components/head
 - https://nextjs.org/docs/pages/building-your-application/routing/custom-document
 - https://nextjs.org/docs/pages/api-reference/components/image
+- https://nextjs.org/docs/pages/building-your-application/routing/api-routes
