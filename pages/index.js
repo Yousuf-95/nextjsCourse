@@ -1,4 +1,4 @@
-import EventList from "@/components/events/eventList";
+import EventList from "@/components/events/event-list.js";
 import connectDb from "../lib/mongodbConnect.js";
 import EventsModel from "../models/eventsModel.js";
 import Head from "next/head.js";
