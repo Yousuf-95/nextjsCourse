@@ -1,5 +1,5 @@
-import EventList from "@/components/events/eventList";
-import EventsSearch from "../../components/events/eventsSearch";
+import EventList from "@/components/events/event-list";
+import EventsSearch from "../../components/events/events-search";
 import { useRouter } from "next/router";
 import connectDb from "@/lib/mongodbConnect";
 import EventsModel from "@/models/eventsModel";
