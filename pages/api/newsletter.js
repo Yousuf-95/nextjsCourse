@@ -11,13 +11,25 @@ async function handler(req, res) {
         return;
       }
 
-      await dbConnect();
+      try {
+        await dbConnect();
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Connecting to database failed." });
+        return;
+      }
 
       const user = new UserModel({
         email: userEmail,
       });
 
-      await user.save();
+      try {
+        await user.save();
+      } catch (error) {
+        res.status(500).json({ message: "Inserting data failed!" });
+        console.log(error);
+        return;
+      }
 
       res.status(201).json({ message: "Subscribed successfully." });
     }
