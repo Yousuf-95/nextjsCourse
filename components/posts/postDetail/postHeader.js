@@ -7,7 +7,7 @@ function PostHeader(props) {
     return (
         <header className={styles.header}> 
             <h1>{title}</h1>
-            <Image src="/images/posts/getting-started-nextjs/getting-started-nextjs.png" alt={title} width={200} height={150} />
+            <Image src={image} alt={title} width={200} height={150} />
         </header>
     );
 }

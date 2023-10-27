@@ -10,7 +10,6 @@ export default PostDetailPage;
 export function getStaticProps(context) {
   const { params } = context;
   const { slug } = params;
-  console.log(context);
 
   const postData = getPostData(slug);
 
