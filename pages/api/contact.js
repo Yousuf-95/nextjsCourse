@@ -1,3 +1,6 @@
+import dbConnect from "@/lib/mongodbConnect";
+import ContactModel from "@/models/contactModel";
+
 async function handler(req, res) {
   try {
     await dbConnect();
@@ -22,7 +25,13 @@ async function handler(req, res) {
         name,
         message,
       };
-      console.log(newMessage);
+
+      const result = await new ContactModel(newMessage).save();
+
+      if(result) {
+        res.status(201).json({ message: "Successfully stored message" });
+      }
+      
     }
   } catch (error) {
     console.log(error);
