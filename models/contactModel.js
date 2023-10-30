@@ -6,4 +6,4 @@ const contactSchema = new mongoose.Schema({
   message: String,
 });
 
-export default mongoose.models.events || mongoose.model("contactmessages", contactSchema);
+export default mongoose.models.contactmessages || mongoose.model("contactmessages", contactSchema);
