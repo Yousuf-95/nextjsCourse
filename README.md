@@ -552,6 +552,13 @@ export const config = {
 ### Note:
 1. It is better not to call your own API route inside <code>getStaticProps</code> or <code>getServerSideProps</code> to get data. Instead, export the logic present inside your API route so that it can be used inside <code>getStaticProps</code> or <code>getServerSideProps</code> functions directly. (See lecture 149: Using API Routes for Pre-rendering Pages).
 
+## Section 12: Deploying NextJS apps
+
+### Deployment options in NextJS
+
+![Deployment options](notesResources/section-12/Section12_1.png)
+
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
