@@ -558,6 +558,16 @@ export const config = {
 
 ![Deployment options](notesResources/section-12/Section12_1.png)
 
+To enable static export, change the output mode to <code>export</code> inside <code>next.config.js</code>
+
+```js
+// next.config.js
+const nextConfig = {
+  output: 'export'
+}
+ 
+module.exports = nextConfig
+```
 
 ## References
 - https://nextjs.org/
@@ -576,3 +586,5 @@ export const config = {
 - https://nextjs.org/docs/pages/building-your-application/routing/custom-document
 - https://nextjs.org/docs/pages/api-reference/components/image
 - https://nextjs.org/docs/pages/building-your-application/routing/api-routes
+- https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables
+- https://nextjs.org/docs/pages/building-your-application/deploying/static-exports
