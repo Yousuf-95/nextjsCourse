@@ -18,6 +18,13 @@ async function handler(req, res) {
         .status(422)
         .json({ message: "Password should be atleast 7 characters long" });
     }
+    
+    await dbConnect();
+
+    let result = await UserModel.findOne({email: email}).lean();
+    if(result) {
+        res.status(422).json({message: 'User with same email already exists'});
+    }
 
     const hashedPassword = await hashPassword(password);
 
@@ -26,7 +33,6 @@ async function handler(req, res) {
       password: hashedPassword,
     });
 
-    await dbConnect();
 
     try {
       await user.save();
