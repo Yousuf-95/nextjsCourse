@@ -569,6 +569,28 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
+## Section 13: Authentication in NextJS
+
+### Using next-auth
+Next-auth must be configured at file path: <code>/pages/api/auth/[...nextauth].js</code>
+
+```JS
+// /pages/api/auth/[...nextauth].js
+export default NextAuth({
+  session: {
+    jwt: true,
+  },
+  providers: [
+    CredentialsProvider({
+      async authorize(credentials) {
+        // Custom logic to authenticate user.
+      },
+    }),
+  ],
+  secret: process.env.NEXTAUTH_SECRET // required in production
+});
+```
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
