@@ -591,6 +591,51 @@ export default NextAuth({
 });
 ```
 
+
+## Course Update for App router
+
+## Section 3: NextJS Essentials (App router)
+
+### Routing in App Router:
+Routing in NextJS app router is the same as in file based routing. The difference only being that instead of `index.js`, a `page.js` file is expected.
+```
+// file-based routing
+.
+└── src/
+    ├── index.js
+    └── products/
+        ├── index.js
+        └── [id].js
+
+// app router
+.
+└── src/
+    ├── page.js
+    └── products/
+        ├── page.js
+        └── [id].js
+```
+
+### Client and Server components
+
+- In app router, by default, NextJS uses Server Components. So, any backend code can be written inside the component as long as it does not use any features specific to frontend (usePathname, useEffect, browser APIs etc).  
+- To use client component, `use client` directive is used on top of the file above the `import` statements.
+
+### Adding layout in App router
+
+Layout for all routes can be defined in `layout.js` file in root folder. Layout for a specific route can be defined in `layout.js` file in the folder corresponding to that route.
+```
+.
+└── src/
+    ├── layout.js // layout for all pages
+    └── dashboard/
+        ├── page.js
+        └── layout.js // layout specific to 'dashboard' page
+```
+
+
+
+
 ## References
 - https://nextjs.org/
 - https://nextjs.org/docs/pages/building-your-application/routing
