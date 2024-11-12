@@ -633,6 +633,53 @@ Layout for all routes can be defined in `layout.js` file in root folder. Layout 
         └── layout.js // layout specific to 'dashboard' page
 ```
 
+### Loading & error page
+
+- To handle loading state, `loading.js` file can be used inside `src/` folder for all pages or inside a route folder for that specific route.
+- Uncaught/unexpected errors can be caught with `error.js` file which must be a _client component_ present in `src/` folder to handle errors for all pages or inside a route folder for a specific route.
+- Unexpected errors in _root layout_ can be handled with `global-error.js` file.
+- Expected errors in _server actions_ needs to be returned to the client using `useFormState` (renamed to `useActionState` in React 19). Errors in _server components_ can be rendered conditionally based on success/failure of requests.
+- Not-found errors: Nextjs has a default 404 page, but can be customized by adding a `not-found.js` file in `src/` directory
+
+
+```
+.
+└── src/
+    ├── not-found.js
+    ├── global-error.js
+    ├── error.js
+    ├── loading.js
+    └── products/
+        ├── page.js
+        ├── error.js
+        └── loading.js
+```
+
+### Server actions
+Server Actions are __asynchronous functions__ that are executed on the server. They can be called in Server and Client Components to handle form submissions and data mutations in Next.js applications. A Server Action can be defined with the React __use server__ directive. There are two ways to define server actions:
+
+1. Place the directive at the top of an async function to mark the function as a Server Action
+    ```ts
+    // app/page.tsx
+
+    export default function Page() {
+    // Server Action
+    async function create() {
+      'use server'
+      // Mutate data
+    }
+  
+    return '...'
+    }
+    ```
+2. Place the directive at the top of a separate file to mark all exports of that file as Server Actions.
+    ```ts
+    // app/actions.ts
+
+    'use server'
+
+    export async function create() {}
+    ```
 
 
 
@@ -655,3 +702,7 @@ Layout for all routes can be defined in `layout.js` file in root folder. Layout 
 - https://nextjs.org/docs/pages/building-your-application/routing/api-routes
 - https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables
 - https://nextjs.org/docs/pages/building-your-application/deploying/static-exports
+- https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates
+- https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
+- https://nextjs.org/docs/app/building-your-application/routing/error-handling
+- https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
