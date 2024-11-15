@@ -682,6 +682,75 @@ Server Actions are __asynchronous functions__ that are executed on the server. T
     ```
 
 
+### useFormStatus hook
+useFormStatus is a Hook that gives you status information of the last form submission. The useFormStatus Hook must be called from a component that is __rendered inside a `<form>`__. The Hook returns information like the pending property which tells you if the form is actively submitting.
+
+```ts
+// const { pending, data, method, action } = useFormStatus();
+
+import { useFormStatus } from "react-dom";
+import action from './actions';
+
+function Submit() {
+  const status = useFormStatus();
+  return <button disabled={status.pending}>Submit</button>
+}
+
+export default function App() {
+  return (
+    <form action={action}>
+      <Submit />
+    </form>
+  );
+}
+```
+
+### useActionState (was _useFormState_ before react 19)
+useActionState is a Hook that allows you to update state based on the result of a form action. You pass useActionState an existing form action function as well as an initial state, and it returns a new action that you use in your form, along with the latest form state and whether the Action is still pending. The latest form state is also passed to the function that you provided.
+
+```ts
+// const [state, formAction, isPending] = useActionState(fn, initialState, permalink?);
+
+import { useActionState } from "react";
+
+async function increment(previousState, formData) {
+  return previousState + 1;
+}
+
+function StatefulForm({}) {
+  const [state, formAction] = useActionState(increment, 0);
+  return (
+    <form>
+      {state}
+      <button formAction={formAction}>Increment</button>
+    </form>
+  )
+}
+```
+
+### Metadata
+Metadata for the application can be added in two ways in NextJS.
+1. Config-based Metadata: export static `metadata` object or dynamic `generateMetadata` function in `layout.js` or `page.js`.
+2. File-based metadata: Add static or dynamically generated special files to route segments.
+
+    ```ts
+    // layout.js (static metadata)
+    export const metadata: Metadata = {
+      title: "PriceTail analytics",
+      description: "Price tracker for e-commerce websites",
+    };
+
+
+    // /about/page.js
+    export async function generateMetadata({params}) {
+      // you can perform API calls here
+
+      return {
+        title: "About",
+        description: "About us - PriceTail Analytics"
+      }
+    }
+    ```
 
 ## References
 - https://nextjs.org/
@@ -706,3 +775,6 @@ Server Actions are __asynchronous functions__ that are executed on the server. T
 - https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 - https://nextjs.org/docs/app/building-your-application/routing/error-handling
 - https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+- https://react.dev/reference/react-dom/hooks/useFormStatus
+- https://react.dev/reference/react/useActionState
+- https://nextjs.org/docs/app/building-your-application/optimizing/metadata
